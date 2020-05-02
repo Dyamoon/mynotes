@@ -11,6 +11,7 @@ public class NoteListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //asdad
         setContentView(R.layout.activity_note_list);
     }
 
