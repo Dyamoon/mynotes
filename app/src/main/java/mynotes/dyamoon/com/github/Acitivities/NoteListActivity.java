@@ -13,6 +13,7 @@ public class NoteListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //asdad
         setContentView(R.layout.activity_note_list);
+        //forum
     }
 
 }
