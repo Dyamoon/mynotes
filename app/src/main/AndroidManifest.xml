@@ -12,12 +12,18 @@
 
 
         <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteActivity">
+
+        </activity>
+
+        <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>
