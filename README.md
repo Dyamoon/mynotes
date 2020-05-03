@@ -1,3 +1,3 @@
-#MarkDown Syntax
-#Notes app
+##MarkDown Syntax
+Notes app
 Just text
