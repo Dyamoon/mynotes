@@ -8,20 +8,20 @@ import java.util.UUID;
 
 public class NoteLab {
      private List<Note> mNotes;
-     private NoteLab sNoteLab;
+     private static NoteLab sNoteLab;
 
      private NoteLab(Context context){
          mNotes = new ArrayList<>();
 
                 for (int i=0;i<100;i++){
                     Note note = new Note();
-                    note.setTitle("Title number - ");
+                    note.setTitle("Title number - " + i);
                     note.setDetails("Note describes smth");
                     mNotes.add(note);
                 }
      }
 
-     public NoteLab get(Context context){
+     public static NoteLab get(Context context){
          if (sNoteLab == null){
              sNoteLab = new NoteLab(context);
          }
