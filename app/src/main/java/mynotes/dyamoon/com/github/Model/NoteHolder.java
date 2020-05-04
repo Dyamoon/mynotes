@@ -13,17 +13,31 @@ import mynotes.dyamoon.com.github.R;
 
 public class NoteHolder extends RecyclerView.ViewHolder {
 
+    private static final String TAG = "NoteHolder.java";
+    
+    
     private Note mNote;
     private TextView mTitle;
     private TextView mDetails;
 
 
 
-    public NoteHolder(LayoutInflater layoutInflater, ViewGroup parent) {
+   /* public NoteHolder(LayoutInflater layoutInflater, ViewGroup parent) {
         super(layoutInflater.inflate(R.layout.single_note_list_item, parent, false));
         mTitle =(TextView) itemView.findViewById(R.id.note_title);
         mDetails = (TextView)itemView.findViewById(R.id.note_details);
+    }*/ //old version of onCreateViewHolder and NoteHolder conc
+
+    public NoteHolder( View itemView) {
+        super(itemView);
+        mTitle =(TextView) itemView.findViewById(R.id.note_title);
+        mDetails = (TextView )itemView.findViewById(R.id.note_details);
     }
+
+
+
+
+
 
    public void bind(Note note){
         mNote = note;
