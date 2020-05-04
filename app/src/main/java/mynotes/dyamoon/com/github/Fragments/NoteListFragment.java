@@ -17,12 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+
+
 import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
 import mynotes.dyamoon.com.github.Model.Note;
 import mynotes.dyamoon.com.github.Model.NoteLab;
 import mynotes.dyamoon.com.github.R;
 
 public class NoteListFragment extends Fragment {
+
 
     public static final String TAG = "NoteListFragment.class";
 
@@ -50,16 +53,25 @@ public class NoteListFragment extends Fragment {
         return view;
     }
 
+
+
+    @Override
+    public void onResume() { //to change data, which we changed, when opened nota(called notaacitvity)
+        super.onResume();
+        updateUI();
+    }                                //delete here!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
     private void updateUI() {
         NoteLab noteLab = NoteLab.get(getActivity());
         List<Note> notes = noteLab.getNotes();
 
-        if (mNoteListAdapter == null){
+        if (mNoteListAdapter==null) {
             mNoteListAdapter = new NoteListAdapter(notes);
             mRecyclerView.setAdapter(mNoteListAdapter);
-        } else {
-            mNoteListAdapter.notifyDataSetChanged();
-            mNoteListAdapter.setNotes(notes);
+        } else
+        {
+            mNoteListAdapter.notifyDataSetChanged(); //DELETE HERE
         }
     }
 
@@ -104,8 +116,10 @@ public class NoteListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Log.d(TAG, "onClick()");
-            Intent intent = new Intent(getActivity(), NoteActivity.class);
-            startActivity(intent);
+
+            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
+            startActivity(intent); //DELETE HEREEEE
+
         }
 
     }

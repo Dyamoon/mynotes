@@ -15,25 +15,49 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.UUID;
+
+import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
 import mynotes.dyamoon.com.github.Model.Note;
 
+import mynotes.dyamoon.com.github.Model.NoteLab;
 import mynotes.dyamoon.com.github.R;
 
 public class NoteFragment extends Fragment{
 
     private static final String TAG = "NoteFragment.class";
 
+    public static final String ARG_NOTE_ID = "note_id"; //this ons too
+
 
     private Note mNote;
-     private   EditText mNoteTitle;
+    private EditText mNoteTitle;
     private EditText mNoteDetails;
 
+
+
+    public static NoteFragment newInstance(UUID noteId){ //it's so convention, just remember it //CONVENTION
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARG_NOTE_ID, noteId);
+        NoteFragment noteFragment = new NoteFragment();
+        noteFragment.setArguments(bundle);
+        return noteFragment;
+    }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNote = new Note();
+
+        UUID note_id = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
+        mNote = NoteLab.get(getActivity()).getNote(note_id);
+
+
+
+
+
+
+
         Log.d(TAG, "onCreate()");
     }
 
@@ -43,6 +67,7 @@ public class NoteFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_note, container, false);
 
         mNoteTitle = view.findViewById(R.id.note_title);
+        mNoteTitle.setText(mNote.getTitle());
         mNoteTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,6 +86,7 @@ public class NoteFragment extends Fragment{
         });
 
         mNoteDetails = view.findViewById(R.id.note_details);
+        mNoteDetails.setText(mNote.getDetails());
         mNoteDetails.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
