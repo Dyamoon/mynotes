@@ -9,14 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import mynotes.dyamoon.com.github.Model.Note;
+
 import mynotes.dyamoon.com.github.R;
 
-public class NoteFragment extends Fragment {
+public class NoteFragment extends Fragment{
 
     private static final String TAG = "NoteFragment.class";
 

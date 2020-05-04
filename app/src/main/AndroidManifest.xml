@@ -11,9 +11,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteActivity">
 
-        </activity>
 
         <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteListActivity">
             <intent-filter>
@@ -23,6 +21,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteActivity">
+
+        </activity>
 
     </application>
 
