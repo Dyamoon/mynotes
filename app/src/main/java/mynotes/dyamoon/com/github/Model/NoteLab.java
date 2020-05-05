@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class NoteLab {
-     private List<Note> mNotes;
+     private  List<Note> mNotes;
      private static NoteLab sNoteLab;
+
+
+
 
      private NoteLab(Context context){
          mNotes = new ArrayList<>();
 
-                for (int i=0;i<100;i++){
+                for (int i=0;i<20;i++){
                     Note note = new Note();
                     note.setTitle("Title number - " + i);
                     note.setDetails("Note describes smth");
@@ -41,5 +44,7 @@ public class NoteLab {
          }
          return null;
      }
+
+
 
 }

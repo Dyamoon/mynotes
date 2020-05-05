@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.github.clans.fab.FloatingActionButton;
+
 import java.util.List;
 
 
@@ -36,6 +39,10 @@ public class NoteListFragment extends Fragment {
    private RecyclerView mRecyclerView;
    private NoteListAdapter mNoteListAdapter;
 
+
+   private FloatingActionButton mFloatingActionButton;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +56,11 @@ public class NoteListFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_note_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        initFloatingButton(view);
+
+
 
         updateUI();
 
@@ -81,6 +93,15 @@ public class NoteListFragment extends Fragment {
 
     }
 
+    private void initFloatingButton(View view){
+        mFloatingActionButton = view.findViewById(R.id.fab);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
     private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -124,7 +145,7 @@ public class NoteListFragment extends Fragment {
             Log.d(TAG, "onClick()");
 
             //mLastUpdatedNoteId = NoteLab.get(getActivity()).getNotes().indexOf(mNote);  it should work too
-            mLastUpdatedNoteId = this.getAdapterPosition();
+            mLastUpdatedNoteId = getAdapterPosition();
             Log.d(TAG, "onClick(), mLastUpdatedNoteId = " + mLastUpdatedNoteId);
 
             Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());

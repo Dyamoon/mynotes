@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_view_note_list"/>
+        android:id="@+id/recycler_view_note_list" />
 
-</LinearLayout>
+<!--maybe deltee-->
+<!--    <ImageButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@android:drawable/ic_menu_add"/>-->
+
+ <!--   <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+-->
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@android:drawable/ic_menu_add"
+        fab:fab_colorNormal="@color/app_primary"
+        fab:fab_colorPressed="@color/app_primary_pressed"
+        fab:fab_colorRipple="@color/app_ripple"/>
+
+
+
+
+
+</FrameLayout>
