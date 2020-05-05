@@ -19,10 +19,10 @@ import mynotes.dyamoon.com.github.R;
 public class NoteActivity extends AppCompatActivity {
     private static final String TAG = "NoteActivity.class";
 
-    private static final String EXTRA_NOTE_ID = "note_id";
+    private static final String EXTRA_NOTE_ID="note_id";
 
 
-    public static Intent newIntent(Context context, UUID id){ //DETELE HERE
+    public static Intent newIntent(Context context, UUID id){
         Intent intent = new Intent(context, NoteActivity.class);
         intent.putExtra(EXTRA_NOTE_ID, id);
         return intent;
@@ -39,13 +39,17 @@ public class NoteActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate()");
 
 
-        UUID noteId = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID); //when we call noteacitivity, it gets note_id by tag EXTRA_NOTE_ID //DELETE HERE
+        UUID id = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID); ////when we call noteacitivity, it gets note_id by tag EXTRA_NOTE_ID
+
+
+        Log.d(TAG, "onCreate() called");
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.container_fragment_note);
 
         if (fragment == null){
-            fragment =  NoteFragment.newInstance(noteId); //here wa call this method and passing noteId, which we got from notelistfragment //DELETE HERE
+            fragment = NoteFragment.newInstance(id); //here wa call this method and passing noteId, which we got from notelistfragment
             fragmentManager.beginTransaction().add(R.id.container_fragment_note, fragment).commit();
         }
 

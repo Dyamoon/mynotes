@@ -27,7 +27,9 @@ public class NoteFragment extends Fragment{
 
     private static final String TAG = "NoteFragment.class";
 
-    public static final String ARG_NOTE_ID = "note_id"; //this ons too
+    private static final String ARG_NOTE_ID = "note_id";
+
+
 
 
     private Note mNote;
@@ -36,25 +38,25 @@ public class NoteFragment extends Fragment{
 
 
 
-    public static NoteFragment newInstance(UUID noteId){ //it's so convention, just remember it //CONVENTION
+
+    public static Fragment newInstance(UUID id){
+        NoteFragment fragment = new NoteFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_NOTE_ID, noteId);
-        NoteFragment noteFragment = new NoteFragment();
-        noteFragment.setArguments(bundle);
-        return noteFragment;
+        bundle.putSerializable(ARG_NOTE_ID, id);
+        fragment.setArguments(bundle);
+        return fragment;
     }
+
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UUID note_id = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
-        mNote = NoteLab.get(getActivity()).getNote(note_id);
+        //Bundle bundle = getArguments(); instead of getArguments
 
-
-
-
+       UUID id = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
+       mNote = NoteLab.get(getActivity()).getNote(id);
 
 
 

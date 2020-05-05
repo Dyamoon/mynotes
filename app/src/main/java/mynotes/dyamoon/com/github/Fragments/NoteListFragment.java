@@ -27,7 +27,10 @@ import mynotes.dyamoon.com.github.R;
 public class NoteListFragment extends Fragment {
 
 
-    public static final String TAG = "NoteListFragment.class";
+    private static final String TAG = "NoteListFragment.class";
+
+
+    private int mLastUpdatedNoteId = -1;
 
 
    private RecyclerView mRecyclerView;
@@ -54,25 +57,28 @@ public class NoteListFragment extends Fragment {
     }
 
 
-
     @Override
-    public void onResume() { //to change data, which we changed, when opened nota(called notaacitvity)
+    public void onResume() {
         super.onResume();
         updateUI();
-    }                                //delete here!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+    }
 
     private void updateUI() {
         NoteLab noteLab = NoteLab.get(getActivity());
         List<Note> notes = noteLab.getNotes();
 
-        if (mNoteListAdapter==null) {
+        if (mNoteListAdapter == null) { //if app is running first time
             mNoteListAdapter = new NoteListAdapter(notes);
             mRecyclerView.setAdapter(mNoteListAdapter);
-        } else
-        {
-            mNoteListAdapter.notifyDataSetChanged(); //DELETE HERE
+        } else if(mLastUpdatedNoteId > -1){ //if we returned from notefragment and changed smth. We notify not all notelist, but just particular item
+
+            mNoteListAdapter.notifyItemChanged(mLastUpdatedNoteId);
+            mLastUpdatedNoteId=-1;
+        }  else { //if we
+            mNoteListAdapter.notifyDataSetChanged();
         }
+
+
     }
 
 
@@ -117,9 +123,12 @@ public class NoteListFragment extends Fragment {
         public void onClick(View v) {
             Log.d(TAG, "onClick()");
 
-            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
-            startActivity(intent); //DELETE HEREEEE
+            //mLastUpdatedNoteId = NoteLab.get(getActivity()).getNotes().indexOf(mNote);  it should work too
+            mLastUpdatedNoteId = this.getAdapterPosition();
+            Log.d(TAG, "onClick(), mLastUpdatedNoteId = " + mLastUpdatedNoteId);
 
+            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
+            startActivity(intent);
         }
 
     }
