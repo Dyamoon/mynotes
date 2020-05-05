@@ -98,7 +98,11 @@ public class NoteListFragment extends Fragment {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Note note = new Note();
+                NoteLab noteLab = NoteLab.get(getActivity());
+                noteLab.addNote(note);
+                Intent intent = NoteActivity.newIntent(getActivity(), note.getId());
+                startActivity(intent);
             }
         });
     }

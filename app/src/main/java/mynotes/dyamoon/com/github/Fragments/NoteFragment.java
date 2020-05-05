@@ -70,6 +70,7 @@ public class NoteFragment extends Fragment{
 
         mNoteTitle = view.findViewById(R.id.note_title);
         mNoteTitle.setText(mNote.getTitle());
+
         mNoteTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

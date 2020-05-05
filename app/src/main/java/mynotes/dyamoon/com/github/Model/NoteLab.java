@@ -15,17 +15,10 @@ public class NoteLab {
 
      private NoteLab(Context context){
          mNotes = new ArrayList<>();
-
-                for (int i=0;i<20;i++){
-                    Note note = new Note();
-                    note.setTitle("Title number - " + i);
-                    note.setDetails("Note describes smth");
-                    mNotes.add(note);
-                }
      }
 
      public static NoteLab get(Context context){
-         if (sNoteLab == null){
+         if (sNoteLab == null){ //we call just once conc!!!
              sNoteLab = new NoteLab(context);
          }
          return sNoteLab;
@@ -43,6 +36,11 @@ public class NoteLab {
              }
          }
          return null;
+     }
+
+
+     public void addNote(Note note){
+         mNotes.add(note);
      }
 
 

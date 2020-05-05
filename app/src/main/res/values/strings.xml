@@ -3,8 +3,8 @@
 
 
     <!--fragment_note-->
-    <string name="fragment_note_title_hint">No title</string>
-    <string name="fragment_note_details_hint">Write something</string>
+    <string name="fragment_note_title_hint">Title</string>
+    <string name="fragment_note_details_hint">Notes</string>
 
 
 

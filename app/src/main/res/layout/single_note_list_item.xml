@@ -9,13 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/note_title"
-        android:text="Title"/>
+        android:text="Title"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/note_details"
-        android:text="Details"/>
+        android:text="Details"
+        android:textSize="22sp"
+        android:textColor="@android:color/black"/>
 
 <!--    <TextView
         android:layout_width="match_parent"
