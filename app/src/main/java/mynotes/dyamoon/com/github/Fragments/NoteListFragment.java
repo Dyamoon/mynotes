@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -33,7 +32,7 @@ public class NoteListFragment extends Fragment {
     private static final String TAG = "NoteListFragment.class";
 
 
-    private int mLastUpdatedNoteId = -1;
+
 
 
    private RecyclerView mRecyclerView;
@@ -51,6 +50,7 @@ public class NoteListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView() called");
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         Log.d(TAG, "onCreateView()");
 
@@ -82,11 +82,8 @@ public class NoteListFragment extends Fragment {
         if (mNoteListAdapter == null) { //if app is running first time
             mNoteListAdapter = new NoteListAdapter(notes);
             mRecyclerView.setAdapter(mNoteListAdapter);
-        } else if(mLastUpdatedNoteId > -1){ //if we returned from notefragment and changed smth. We notify not all notelist, but just particular item
-
-            mNoteListAdapter.notifyItemChanged(mLastUpdatedNoteId);
-            mLastUpdatedNoteId=-1;
-        }  else { //if we
+        } else {
+            mNoteListAdapter.setNotes(notes);
             mNoteListAdapter.notifyDataSetChanged();
         }
 
@@ -101,7 +98,7 @@ public class NoteListFragment extends Fragment {
                 Note note = new Note();
                 NoteLab noteLab = NoteLab.get(getActivity());
                 noteLab.addNote(note);
-                Intent intent = NoteActivity.newIntent(getActivity(), note.getId());
+                Intent intent = NoteActivity.newIntent(getActivity(), note.getUUID());
                 startActivity(intent);
             }
         });
@@ -149,10 +146,8 @@ public class NoteListFragment extends Fragment {
             Log.d(TAG, "onClick()");
 
             //mLastUpdatedNoteId = NoteLab.get(getActivity()).getNotes().indexOf(mNote);  it should work too
-            mLastUpdatedNoteId = getAdapterPosition();
-            Log.d(TAG, "onClick(), mLastUpdatedNoteId = " + mLastUpdatedNoteId);
 
-            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
+            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getUUID());
             startActivity(intent);
         }
 

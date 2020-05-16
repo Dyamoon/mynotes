@@ -63,6 +63,13 @@ public class NoteFragment extends Fragment{
         Log.d(TAG, "onCreate()");
     }
 
+
+    @Override
+    public void onPause() { //updating notelab when user leaves noteactivity
+        super.onPause();
+        NoteLab.get(getActivity()).updateNote(mNote);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

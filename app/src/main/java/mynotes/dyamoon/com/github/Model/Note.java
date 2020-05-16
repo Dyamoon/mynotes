@@ -5,15 +5,19 @@ import java.util.UUID;
 public class Note {
     private String mTitle;
     private String mDetails;
-    private UUID mId;
+    private UUID mUUID;
 
 
     public Note() {
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
     }
 
-    public UUID getId() {
-        return mId;
+    public Note(UUID uuid){
+        mUUID = uuid;
+    }
+
+    public UUID getUUID() {
+        return mUUID;
     }
 
     public String getTitle() {
