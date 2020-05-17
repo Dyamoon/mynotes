@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.List;
-
+import java.util.UUID;
 
 
 import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
@@ -54,12 +55,11 @@ public class NoteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         Log.d(TAG, "onCreateView()");
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_note_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
+        initRecyclerView(view);
         initFloatingButton(view);
-
+        SwipeDelete();
 
 
         updateUI();
@@ -102,7 +102,41 @@ public class NoteListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    } //init create new note button
+
+    private void initRecyclerView(View view){
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_note_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+    private void SwipeDelete(){
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                List<Note> notes = mNoteListAdapter.getNotes();
+
+                UUID uuid = notes.get(viewHolder.getAdapterPosition()).getUUID(); //we need get especially uuid
+                NoteLab noteLab = NoteLab.get(getActivity()); //get object of class NoteLab
+                noteLab.deleteNote(uuid); //delete note note row from DB
+
+                updateUI(); //update mNotes, cause we deleted from DB, but didn;t delete from RecycleviewVIew.mNotes
+            }
+        };
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);  //attach our itemTouchHelper to RV
+    }
+
+
+
+
+
+
 
     private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -151,6 +185,14 @@ public class NoteListFragment extends Fragment {
             startActivity(intent);
         }
 
+        //test........................
+        public Note getNote(){
+            return mNote;
+        }
+
+
+
+
     }
     private class NoteListAdapter extends RecyclerView.Adapter<NoteHolder> {
         public static final String TAG= "NoteListAdapter.class";
@@ -195,6 +237,11 @@ public class NoteListFragment extends Fragment {
         public void setNotes(List<Note> notes){
             mNotes= notes;
         }
+
+        public List<Note> getNotes(){
+            return mNotes;
+        } //this method i needeed to implement delete method
+
 
     }
 

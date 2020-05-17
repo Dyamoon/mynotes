@@ -107,4 +107,9 @@ public class NoteLab {
          return contentValues;
      }
 
+     //return 1 if succesfully, return 0 if unsucsessfulyy
+     public int deleteNote(UUID uuid){
+         return mSQLiteDatabase.delete(NOTE_TABLE.NAME, NOTE_TABLE.COLS.UUID + " = ? ",     new String[]{   uuid.toString() });
+     }
+
 }
