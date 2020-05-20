@@ -130,6 +130,7 @@ public class NoteListFragment extends Fragment {
             }
         };
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);  //attach our itemTouchHelper to RV
+
     }
 
 
@@ -184,18 +185,9 @@ public class NoteListFragment extends Fragment {
             Intent intent = NoteActivity.newIntent(getActivity(), mNote.getUUID());
             startActivity(intent);
         }
-
-        //test........................
-        public Note getNote(){
-            return mNote;
-        }
-
-
-
-
     }
     private class NoteListAdapter extends RecyclerView.Adapter<NoteHolder> {
-        public static final String TAG= "NoteListAdapter.class";
+        private static final String TAG= "NoteListAdapter.class";
         private List<Note> mNotes;
 
 

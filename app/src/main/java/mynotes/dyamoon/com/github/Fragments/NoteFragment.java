@@ -1,10 +1,14 @@
 package mynotes.dyamoon.com.github.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import java.util.UUID;
 
 import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
+import mynotes.dyamoon.com.github.Acitivities.NoteListActivity;
 import mynotes.dyamoon.com.github.Model.Note;
 
 import mynotes.dyamoon.com.github.Model.NoteLab;
@@ -53,12 +58,12 @@ public class NoteFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Bundle bundle = getArguments(); instead of getArguments
+        setHasOptionsMenu(true); //for toolbars
 
+
+        //Bundle bundle = getArguments(); instead of getArguments
        UUID id = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
        mNote = NoteLab.get(getActivity()).getNote(id);
-
-
 
         Log.d(TAG, "onCreate()");
     }
@@ -67,7 +72,12 @@ public class NoteFragment extends Fragment{
     @Override
     public void onPause() { //updating notelab when user leaves noteactivity
         super.onPause();
-        NoteLab.get(getActivity()).updateNote(mNote);
+        NoteLab noteLab = NoteLab.get(getActivity());
+
+        if (noteLab.getNote(mNote.getUUID()) != null){ //if we get null, it means that we deleted note in NoreFragment in toolbar
+            NoteLab.get(getActivity()).updateNote(mNote);
+        }
+
     }
 
     @Nullable
@@ -117,5 +127,26 @@ public class NoteFragment extends Fragment{
         Log.d(TAG, "onCreateView()");
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) { //creating toolbar
+        inflater.inflate(R.menu.fragment_note, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_note:
+                NoteLab noteLab = NoteLab.get(getActivity());
+                noteLab.deleteNote(mNote.getUUID());
+                Intent intent = new Intent(getActivity(), NoteListActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteActivity">
+        <activity android:name="mynotes.dyamoon.com.github.Acitivities.NoteActivity"
+            android:parentActivityName=".Acitivities.NoteListActivity">
 
         </activity>
 

@@ -112,4 +112,7 @@ public class NoteLab {
          return mSQLiteDatabase.delete(NOTE_TABLE.NAME, NOTE_TABLE.COLS.UUID + " = ? ",     new String[]{   uuid.toString() });
      }
 
+
+
+
 }
