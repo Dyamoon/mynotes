@@ -1,5 +1,7 @@
 package mynotes.dyamoon.com.github.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +28,7 @@ import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
 import mynotes.dyamoon.com.github.Model.Note;
 import mynotes.dyamoon.com.github.Model.NoteLab;
 import mynotes.dyamoon.com.github.R;
+import mynotes.dyamoon.com.github.utils.DeleteAlertDialog;
 
 public class NoteListFragment extends Fragment {
 
@@ -121,12 +124,12 @@ public class NoteListFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
                 List<Note> notes = mNoteListAdapter.getNotes();
+                final UUID uuid = notes.get(viewHolder.getAdapterPosition()).getUUID(); //we need get especially uuid
 
-                UUID uuid = notes.get(viewHolder.getAdapterPosition()).getUUID(); //we need get especially uuid
-                NoteLab noteLab = NoteLab.get(getActivity()); //get object of class NoteLab
-                noteLab.deleteNote(uuid); //delete note note row from DB
+             AlertDialog myQuittingDialogBox = deleteAlertDialog(uuid);
+             myQuittingDialogBox.show();
 
-                updateUI(); //update mNotes, cause we deleted from DB, but didn;t delete from RecycleviewVIew.mNotes
+               // updateUI(); //update mNotes, cause we deleted from DB, but didn;t delete from RecycleviewVIew.mNotes
             }
         };
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);  //attach our itemTouchHelper to RV
@@ -139,7 +142,7 @@ public class NoteListFragment extends Fragment {
 
 
 
-    private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         private static final String TAG = "NoteHolder.java";
 
@@ -162,6 +165,7 @@ public class NoteListFragment extends Fragment {
             Log.d(TAG, "conc NoteHOlder");
 
             itemView.setOnClickListener(this); //without this doesn't work onClick() method
+            itemView.setOnLongClickListener(this); //without this doesn;t work long click
 
             mTitle =(TextView) itemView.findViewById(R.id.note_title);
             mDetails = (TextView )itemView.findViewById(R.id.note_details);
@@ -184,6 +188,15 @@ public class NoteListFragment extends Fragment {
 
             Intent intent = NoteActivity.newIntent(getActivity(), mNote.getUUID());
             startActivity(intent);
+        }
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            Log.d(TAG, "onLongClick()");
+            AlertDialog myQuittingDialogBox = deleteAlertDialog(mNote.getUUID());
+            myQuittingDialogBox.show();
+            return true;
         }
     }
     private class NoteListAdapter extends RecyclerView.Adapter<NoteHolder> {
@@ -239,6 +252,33 @@ public class NoteListFragment extends Fragment {
 
 
 
+    AlertDialog deleteAlertDialog(final UUID uuid){
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(getActivity())
+                // set message, title, and icon
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete")
+
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        NoteLab noteLab = NoteLab.get(getActivity()); //get object of class NoteLab
+                        noteLab.deleteNote(uuid); //delete note note row from DB
+                        dialog.dismiss();
+                        updateUI();
+                    }
+
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                        updateUI();
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+    }
 
 
 

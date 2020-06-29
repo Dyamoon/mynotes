@@ -1,5 +1,7 @@
 package mynotes.dyamoon.com.github.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
@@ -86,6 +89,7 @@ public class NoteFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_note, container, false);
 
         mNoteTitle = view.findViewById(R.id.note_title);
+
         mNoteTitle.setText(mNote.getTitle());
 
         mNoteTitle.addTextChangedListener(new TextWatcher() {
@@ -139,10 +143,31 @@ public class NoteFragment extends Fragment{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.delete_note:
-                NoteLab noteLab = NoteLab.get(getActivity());
-                noteLab.deleteNote(mNote.getUUID());
-                Intent intent = new Intent(getActivity(), NoteListActivity.class);
-                startActivity(intent);
+
+                AlertDialog myQuittingDialogBox = new AlertDialog.Builder(getActivity())
+                        // set message, title, and icon
+                        .setTitle("Delete")
+                        .setMessage("Do you want to Delete")
+
+
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                NoteLab noteLab = NoteLab.get(getActivity()); //get object of class NoteLab
+                                noteLab.deleteNote(mNote.getUUID()); //delete note note row from DB
+                                dialog.dismiss();
+                                Objects.requireNonNull(getActivity()).onBackPressed();
+                            }
+
+                        })
+                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create();
+                myQuittingDialogBox.show();
+
                 break;
             default:
                 break;
