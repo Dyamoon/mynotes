@@ -6,6 +6,8 @@
     <string name="fragment_note_title_hint">Title</string>
     <string name="fragment_note_details_hint">Notes</string>
 
-
+    <string name="share_note">%1$s %2$s</string>
+    <string name="share_note_one_empty">%1$s</string>
+    <string name="share_note_empty">Empty note</string>
 
 </resources>

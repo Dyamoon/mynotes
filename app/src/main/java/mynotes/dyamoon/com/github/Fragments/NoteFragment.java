@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,7 @@ import mynotes.dyamoon.com.github.Model.Note;
 
 import mynotes.dyamoon.com.github.Model.NoteLab;
 import mynotes.dyamoon.com.github.R;
+import mynotes.dyamoon.com.github.utils.ShareText;
 
 public class NoteFragment extends Fragment{
 
@@ -137,6 +139,7 @@ public class NoteFragment extends Fragment{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) { //creating toolbar
         inflater.inflate(R.menu.fragment_note, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override
@@ -169,6 +172,22 @@ public class NoteFragment extends Fragment{
                 myQuittingDialogBox.show();
 
                 break;
+
+            case R.id.share_note:
+              Log.d(TAG, "Share Butoon");
+
+                String shareText = new ShareText().getShareText(mNote.getTitle(), mNote.getDetails(), getActivity()); //here 's been my mistake it's essential to use mNonte methods, NOT mNoteTitle!
+                Log.d(TAG, shareText);
+
+                Intent i = new Intent(Intent.ACTION_SEND); //type of Intett SEND, or VIEW or wtec.
+                i.setType("text/plain"); //set type what type of data we will send
+                i.putExtra(Intent.EXTRA_TEXT, shareText); //i shoold use Intent's extra to simplier other app recognizes my intent
+                startActivity(i);
+
+
+
+                break;
+
             default:
                 break;
         }

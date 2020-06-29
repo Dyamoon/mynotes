@@ -258,7 +258,6 @@ public class NoteListFragment extends Fragment {
                 .setTitle("Delete")
                 .setMessage("Do you want to Delete")
 
-
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
