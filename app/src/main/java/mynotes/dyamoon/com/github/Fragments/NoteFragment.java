@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,8 +23,6 @@ import androidx.fragment.app.Fragment;
 import java.util.Objects;
 import java.util.UUID;
 
-import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
-import mynotes.dyamoon.com.github.Acitivities.NoteListActivity;
 import mynotes.dyamoon.com.github.Model.Note;
 
 import mynotes.dyamoon.com.github.Model.NoteLab;
@@ -163,7 +160,7 @@ public class NoteFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) { //creating toolbar
-        inflater.inflate(R.menu.fragment_note, menu);
+        inflater.inflate(R.menu.menu_fragment_note, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
     }

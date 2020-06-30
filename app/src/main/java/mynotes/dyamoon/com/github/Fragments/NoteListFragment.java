@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +26,7 @@ import com.github.clans.fab.FloatingActionButton;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.Inflater;
 
 
 import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
@@ -49,6 +54,7 @@ public class NoteListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -57,7 +63,6 @@ public class NoteListFragment extends Fragment {
         Log.d(TAG, "onCreateView() called");
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         Log.d(TAG, "onCreateView()");
-
 
 
         initRecyclerView(view);
@@ -78,7 +83,19 @@ public class NoteListFragment extends Fragment {
         updateUI();
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_fragment_note_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
     private void updateUI() {
+
         NoteLab noteLab = NoteLab.get(getActivity());
 
 
