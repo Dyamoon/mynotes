@@ -16,8 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 
-
-
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -66,7 +65,13 @@ public class NoteFragment extends Fragment{
         setHasOptionsMenu(true); //for toolbars
 
 
+
+
+
+
+
         //Bundle bundle = getArguments(); instead of getArguments
+
        UUID id = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
        mNote = NoteLab.get(getActivity()).getNote(id);
 
@@ -75,15 +80,31 @@ public class NoteFragment extends Fragment{
 
 
     @Override
-    public void onPause() { //updating notelab when user leaves noteactivity
+    public void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause()");
+        Log.d(TAG, getActivity().isFinishing()+"isFinishin()");
+
         NoteLab noteLab = NoteLab.get(getActivity());
 
-        if (noteLab.getNote(mNote.getUUID()) != null){ //if we get null, it means that we deleted note in NoreFragment in toolbar
-            NoteLab.get(getActivity()).updateNote(mNote);
+        if (noteLab.getNote(mNote.getUUID()) != null){ //if we get null, it means that we deleted note in NoreFragment in
+            //Here if note we didn;t delete and it's not empty we just update in singleton
+            //we invoke this method everytime cause I can for example share note, close app, press back button and it would be good to anyway update notelab
+            Log.d(TAG, "onPause() if statement where update note");
+            noteLab.updateNote(mNote);
         }
+/*
+
+        if (noteLab.getNote(mNote.getUUID()) != null && getActivity().isFinishing() && mNote.getTitle() == null && mNote.getDetails() == null){
+            //Here we delete note from noteLab, just WHEN UUID isn;t nul(then it's deleted),
+            Log.d(TAG, "onPause() if statement whre delete note");
+            noteLab.deleteNote(mNote.getUUID());
+        }
+*/
+    //I decided to make this itility in updateUI() in NoteListFragment. It's more proctive and less bugs.
 
     }
+
 
     @Nullable
     @Override
@@ -102,7 +123,9 @@ public class NoteFragment extends Fragment{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mNote.setTitle(s.toString());
+
+                    mNote.setTitle(s.toString());
+
             }
 
             @Override
@@ -121,7 +144,10 @@ public class NoteFragment extends Fragment{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mNote.setDetails(s.toString());
+               // if(s.length() == 0){ //withoutthis condition i couldn;t update notelist from empty notes, cause its difference between null and ""
+                   //its been bad exp causesingleton could already save details or title like ""
+                    mNote.setDetails(s.toString());
+
             }
 
             @Override
@@ -171,6 +197,7 @@ public class NoteFragment extends Fragment{
                         .create();
                 myQuittingDialogBox.show();
 
+
                 break;
 
             case R.id.share_note:
@@ -193,4 +220,6 @@ public class NoteFragment extends Fragment{
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

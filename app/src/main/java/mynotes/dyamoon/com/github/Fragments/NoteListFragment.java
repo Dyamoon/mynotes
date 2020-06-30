@@ -80,6 +80,18 @@ public class NoteListFragment extends Fragment {
 
     private void updateUI() {
         NoteLab noteLab = NoteLab.get(getActivity());
+
+
+        for (Note note : noteLab.getNotes()){
+            Log.d(TAG, note.getTitle()+" Title");
+            Log.d(TAG, note.getDetails()+" DEatils");
+            if ((note.getDetails() == null || note.getDetails().length() == 0 ) //very annoying moment and not so difficuld
+                    && (note.getTitle() == null || note.getTitle().length() == 0)){
+
+
+                 noteLab.deleteNote(note.getUUID());
+            }
+        }
         List<Note> notes = noteLab.getNotes();
 
         if (mNoteListAdapter == null) { //if app is running first time
@@ -252,7 +264,7 @@ public class NoteListFragment extends Fragment {
 
 
 
-    AlertDialog deleteAlertDialog(final UUID uuid){
+   private AlertDialog deleteAlertDialog(final UUID uuid){
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(getActivity())
                 // set message, title, and icon
                 .setTitle("Delete")
