@@ -12,13 +12,12 @@ import mynotes.dyamoon.com.github.Model.NoteLab;
 //
 public class DeleteAlertDialog {
 
-    public AlertDialog deleteAlertDialog(final Context context, final UUID uuid){
+    public static AlertDialog deleteAlertDialog(final Context context, final UUID uuid){
 
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(context)
                 // set message, title, and icon
                 .setTitle("Delete")
                 .setMessage("Do you want to Delete")
-
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
@@ -40,6 +39,10 @@ public class DeleteAlertDialog {
         myQuittingDialogBox.show();
         return myQuittingDialogBox;
     }
+
+
+
+
 
 
 

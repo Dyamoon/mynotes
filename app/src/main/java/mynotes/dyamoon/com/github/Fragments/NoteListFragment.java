@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,11 +30,14 @@ import java.util.UUID;
 import java.util.zip.Inflater;
 
 
+
 import mynotes.dyamoon.com.github.Acitivities.NoteActivity;
 import mynotes.dyamoon.com.github.Model.Note;
 import mynotes.dyamoon.com.github.Model.NoteLab;
 import mynotes.dyamoon.com.github.R;
 import mynotes.dyamoon.com.github.utils.DeleteAlertDialog;
+
+//import static mynotes.dyamoon.com.github.utils.DeleteAlertDialog.deleteAlertDialog; //for using method deleteAlertDialog
 
 public class NoteListFragment extends Fragment {
 
@@ -60,9 +64,10 @@ public class NoteListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView() called");
+
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
-        Log.d(TAG, "onCreateView()");
+
+
 
 
         initRecyclerView(view);
@@ -228,6 +233,7 @@ public class NoteListFragment extends Fragment {
             return true;
         }
     }
+
     private class NoteListAdapter extends RecyclerView.Adapter<NoteHolder> {
         private static final String TAG= "NoteListAdapter.class";
         private List<Note> mNotes;
@@ -260,8 +266,8 @@ public class NoteListFragment extends Fragment {
         public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
             Note note = mNotes.get(position);
             holder.bind(note);
-
         }
+
 
         @Override
         public int getItemCount() {
@@ -281,25 +287,25 @@ public class NoteListFragment extends Fragment {
 
 
 
-   private AlertDialog deleteAlertDialog(final UUID uuid){
+private AlertDialog deleteAlertDialog(final UUID uuid){
+
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(getActivity())
                 // set message, title, and icon
                 .setTitle("Delete")
                 .setMessage("Do you want to Delete")
-
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         NoteLab noteLab = NoteLab.get(getActivity()); //get object of class NoteLab
                         noteLab.deleteNote(uuid); //delete note note row from DB
                         dialog.dismiss();
+                        Toast.makeText(getActivity(), "Note deleted.", Toast.LENGTH_SHORT).show();
                         updateUI();
                     }
 
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
                         dialog.dismiss();
                         updateUI();
                     }
@@ -307,8 +313,6 @@ public class NoteListFragment extends Fragment {
                 .create();
         return myQuittingDialogBox;
     }
-
-
 
 
 

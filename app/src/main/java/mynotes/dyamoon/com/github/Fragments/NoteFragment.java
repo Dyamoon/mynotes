@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -182,6 +183,7 @@ public class NoteFragment extends Fragment{
                                 NoteLab noteLab = NoteLab.get(getActivity()); //get object of class NoteLab
                                 noteLab.deleteNote(mNote.getUUID()); //delete note note row from DB
                                 dialog.dismiss();
+                                Toast.makeText(getActivity(), "Note deleted.", Toast.LENGTH_SHORT).show();
                                 Objects.requireNonNull(getActivity()).onBackPressed();
                             }
 
