@@ -61,6 +61,8 @@ public class NoteListFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -292,6 +294,7 @@ private AlertDialog deleteAlertDialog(final UUID uuid){
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(getActivity())
                 // set message, title, and icon
                 .setTitle("Delete")
+                .setCancelable(false)
                 .setMessage("Do you want to Delete")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
@@ -311,8 +314,11 @@ private AlertDialog deleteAlertDialog(final UUID uuid){
                     }
                 })
                 .create();
+
+
         return myQuittingDialogBox;
     }
+
 
 
 
